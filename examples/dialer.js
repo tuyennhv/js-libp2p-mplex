@@ -2,7 +2,8 @@
 'use strict'
 
 const tcp = require('net')
-const pull = require('pull-stream')
+const pull = require('pull-stream/pull')
+const values = require('pull-stream/sources/values')
 const toPull = require('stream-to-pull-stream')
 const multiplex = require('../src')
 
@@ -17,6 +18,6 @@ const stream = muxer.newStream((err) => {
 })
 
 pull(
-  pull.values(['hey, how is it going. I am the dialer']),
+  values(['hey, how is it going. I am the dialer']),
   stream
 )

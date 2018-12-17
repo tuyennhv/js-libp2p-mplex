@@ -2,7 +2,8 @@
 'use strict'
 
 const tcp = require('net')
-const pull = require('pull-stream')
+const pull = require('pull-stream/pull')
+const drain = require('pull-stream/sinks/drain')
 const toPull = require('stream-to-pull-stream')
 const multiplex = require('../src')
 
@@ -15,7 +16,7 @@ const listener = tcp.createServer((socket) => {
     console.log('[listener] Got stream!')
     pull(
       stream,
-      pull.drain((data) => {
+      drain((data) => {
         console.log('[listener] Received:')
         console.log(data.toString())
       })

@@ -7,7 +7,11 @@ const expect = chai.expect
 chai.use(dirtyChai)
 const WSlibp2p = require('libp2p-websockets')
 const multiaddr = require('multiaddr')
-const pull = require('pull-stream')
+const collect = require('pull-stream/sinks/collect')
+const values = require('pull-stream/sources/values')
+const empty = require('pull-stream/sources/empty')
+const onEnd = require('pull-stream/sinks/on-end')
+const pull = require('pull-stream/pull')
 
 const multiplex = require('../src')
 
@@ -26,18 +30,18 @@ describe('browser-server', () => {
     muxedConn.on('stream', (conn) => {
       pull(
         conn,
-        pull.collect((err, chunks) => {
+        collect((err, chunks) => {
           expect(err).to.not.exist()
           expect(chunks).to.be.eql([Buffer.from('hey')])
-          pull(pull.empty(), conn)
+          pull(empty(), conn)
         })
       )
     })
 
     pull(
-      pull.values([Buffer.from('hey')]),
+      values([Buffer.from('hey')]),
       muxedConn.newStream(),
-      pull.onEnd(done)
+      onEnd(done)
     )
   })
 })
