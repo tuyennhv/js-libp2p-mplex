@@ -114,6 +114,7 @@ class Channel extends stream.Duplex {
       } catch (e) { /* do nothing */ }
     }
 
+    this.emit('close')
     this._finalize()
     callback(err)
   }
