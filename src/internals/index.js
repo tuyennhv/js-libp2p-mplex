@@ -474,7 +474,7 @@ class Multiplex extends stream.Duplex {
         stream.destroy(err || new Error('Channel destroyed'))
       }
     })
-
+    this.emit('close')
     this._clear()
     callback(err)
   }
