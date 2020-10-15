@@ -56,7 +56,7 @@ module.exports = ({ id, name, send, onEnd = () => {}, type = 'initiator', maxMsg
     }
   }
 
-  const stream = {    
+  const stream = {
     // Close for both Reading and Writing
     close: () => Promise.all([
       stream.closeRead(),
