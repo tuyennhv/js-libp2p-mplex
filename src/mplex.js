@@ -216,14 +216,17 @@ class Mplex {
     switch (type) {
       case MessageTypes.MESSAGE_INITIATOR:
       case MessageTypes.MESSAGE_RECEIVER:
+        // We got data from the remote, push it into our local stream
         stream.source.push(data)
         break
       case MessageTypes.CLOSE_INITIATOR:
       case MessageTypes.CLOSE_RECEIVER:
-        stream.close()
+        // We should expect no more data from the remote, stop reading
+        stream.closeRead()
         break
       case MessageTypes.RESET_INITIATOR:
       case MessageTypes.RESET_RECEIVER:
+        // Stop reading and writing to the stream immediately
         stream.reset()
         break
       default:
