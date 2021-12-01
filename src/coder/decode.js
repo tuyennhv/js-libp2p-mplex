@@ -35,7 +35,7 @@ class Decoder {
     while (true) {
       if (!this._buffer.length) {
         // after consuming the whole length, _buffer has 0 length so don't want to bother varint
-        break;
+        break
       }
       if (!this._headerInfo) {
         try {
