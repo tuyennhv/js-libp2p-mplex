@@ -32,11 +32,7 @@ class Decoder {
     this._buffer.append(chunk)
     const msgs = []
 
-    while (true) {
-      if (!this._buffer.length) {
-        // after consuming the whole length, _buffer has 0 length so don't want to bother varint
-        break
-      }
+    while (this._buffer.length) {
       if (!this._headerInfo) {
         try {
           this._headerInfo = this._decodeHeader(this._bufferProxy)
